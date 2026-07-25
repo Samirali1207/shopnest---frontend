@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
 
   const { user, logout } = useContext(AuthContext)
 
-  const cartItems = [{ productId: "123" }]
+  const cartItems = useSelector(state => state.cart.cartItems)
 
   const handleLogout = () => {
     logout()

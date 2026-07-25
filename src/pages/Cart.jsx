@@ -1,54 +1,23 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { removeFromCart, addToCart } from "../redux/features/cartsSlice";
+import { removeFromCart, addToCart, updateQty } from "../redux/features/cartsSlice";
+
 
 const Cart = () => {
-    const cartItems = [
-        {
-            productId: "1",
-            name: "Wireless Headphones",
-            price: 2999,
-            qty: 1,
-            imageUrl:
-                "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
-        },
-        {
-            productId: "2",
-            name: "Gaming Mouse",
-            price: 1499,
-            qty: 2,
-            imageUrl:
-                "https://images.unsplash.com/photo-1527814050087-3793815479db?w=500",
-        },
-        {
-            productId: "3",
-            name: "Mechanical Keyboard",
-            price: 4599,
-            qty: 1,
-            imageUrl:
-                "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500",
-        },
-    ];
-    
-    console.log(cartItems)
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+
+    const cartItems = useSelector(state => state.cart.cartItems)
+    const dispatch = useDispatch()
 
     const handleRemove = (id) => {
-        dispatch(removeFromCart(id));
-    };
+        dispatch(removeFromCart(id))
+    }
 
-    const handleUpdateQty = (item, qty) => {
-        if (qty > 0) {
-            dispatch(addToCart({ ...item, qty }));
-        }
-    };
+    const handleUpdateQty = (item, quantity) => {
+        if (quantity < 1) return
 
-    const totalPrice = cartItems.reduce(
-        (acc, item) => acc + item.price * item.qty,
-        0
-    );
+        dispatch(updateQty({ productId: item.productId, qty: quantity }))
+    }
 
     return (
         <div className="min-h-screen bg-gray-950 px-4 py-10">
@@ -182,9 +151,9 @@ const Cart = () => {
 
                                     <span>Total</span>
 
-                                    <span className="text-orange-500">
+                                    {/* <span className="text-orange-500">
                                         ₹{totalPrice.toFixed(2)}
-                                    </span>
+                                    </span> */}
 
                                 </div>
 

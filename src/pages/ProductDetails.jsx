@@ -5,7 +5,6 @@ import { addToCart } from "../redux/features/cartsSlice";
 import axios from "axios"
 const ProductDetails = () => {
     const { id } = useParams();
-    console.log(id)
     const dispatch = useDispatch();
 
     const [product, setProduct] = useState(null);

@@ -9,12 +9,12 @@ const AdminProducts = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const res = await axios.get(`${import.meta.env.VITE_URL}/api/product`,{
+            const res = await axios.get(`${import.meta.env.VITE_URL}/api/product`, {
                 headers: {
-                    Authorization : `Bearer ${user.token}`
+                    Authorization: `Bearer ${user.token}`
                 }
             })
-            
+
             setProducts(res.data)
 
         };
@@ -23,17 +23,20 @@ const AdminProducts = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this product?")) {
-            const res = await fetch(`/api/products/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            });
-
-            if (res.ok) {
-                setProducts(products.filter((p) => p._id !== id));
+        try {
+            if (window.confirm("Are you sure you want to delete this product?")) {
+                const res = await axios.delete(`${import.meta.env.VITE_URL}/api/product/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`
+                    }
+                });
+                if (res.status == 200 || res.status == 201) {
+                    setProducts(products.filter((p) => p._id !== id));
+                    alert(res.data.message)
+                }
             }
+        } catch (error) {
+            console.log(error.response.data)
         }
     };
 
