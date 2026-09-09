@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, data } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, Link, data, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/features/cartsSlice";
 import axios from "axios"
+import { AuthContext } from "../context/AuthContext";
+
 const ProductDetails = () => {
+    const { user } = useContext(AuthContext);
+    console.log(user)
+    const navigate = useNavigate();
     const { id } = useParams();
     const dispatch = useDispatch();
 
@@ -32,6 +37,12 @@ const ProductDetails = () => {
 
     // ---------------- Add To Cart ----------------
     const handleAddToCart = () => {
+        if (!user) {
+            alert("Please login to add product to cart");
+            navigate("/login");
+            return ; 
+        }
+
         dispatch(
             addToCart({
                 productId: product._id,

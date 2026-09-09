@@ -9,6 +9,8 @@ const Cart = () => {
     const cartItems = useSelector(state => state.cart.cartItems)
     const dispatch = useDispatch()
 
+    const navigate = useNavigate()
+
     const handleRemove = (id) => {
         dispatch(removeFromCart(id))
     }
@@ -18,6 +20,11 @@ const Cart = () => {
 
         dispatch(updateQty({ productId: item.productId, qty: quantity }))
     }
+
+    const totalPrice = cartItems.reduce(
+        (acc, item) => acc + item.price * item.qty,
+        0
+    );
 
     return (
         <div className="min-h-screen bg-gray-950 px-4 py-10">
@@ -151,9 +158,9 @@ const Cart = () => {
 
                                     <span>Total</span>
 
-                                    {/* <span className="text-orange-500">
+                                    <span className="text-orange-500">
                                         ₹{totalPrice.toFixed(2)}
-                                    </span> */}
+                                    </span>
 
                                 </div>
 
