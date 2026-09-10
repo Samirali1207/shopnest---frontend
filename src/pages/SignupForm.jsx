@@ -17,17 +17,20 @@ const SignupForm = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        try {
+            e.preventDefault()
 
-        const res = await axios.post(`${import.meta.env.VITE_URL}/api/auth/register`, formData, {
-            headers: { "content-type": "application/json" }
-        })
+            const res = await axios.post(`${import.meta.env.VITE_URL}/api/auth/register`, formData, {
+                headers: { "content-type": "application/json" }
+            })
 
-        console.log(res)
-
-        if (res.status == 200 || res.status == 201) {
-            alert(res.data.message)
-            navigate("/verify-message")
+            if (res.status == 200 || res.status == 201) {
+                alert(res.data.message)
+                navigate("/verify-message")
+            }
+        }
+        catch (err) {
+            alert(err.response.data.message)
         }
 
     }

@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 import { clearCart } from "../redux/features/cartsSlice";
 
 const Checkout = () => {
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const cartItems = useSelector((state) => state.cart.cartItems);
 
     const dispatch = useDispatch();
@@ -84,7 +84,7 @@ const Checkout = () => {
                                 }
                             );
 
-                           alert("Order Created:", orderResponse.data);
+                            alert("Order Created:", orderResponse.data);
 
                             dispatch(clearCart());
 
