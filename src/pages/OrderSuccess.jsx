@@ -14,12 +14,9 @@ const OrderSuccess = () => {
                     <span className="text-4xl text-green-600">✓</span>
                 </div>
 
-
                 <h2 className="text-3xl sm:text-4xl font-bold text-green-600 mb-4">
                     Payment Successful!
                 </h2>
-
-
                 <p className="text-gray-600 text-base sm:text-lg mb-8">
                     Thank you for your order. We have securely received your payment
                     and will process your shipment shortly.

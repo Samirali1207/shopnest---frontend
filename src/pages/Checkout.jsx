@@ -87,7 +87,7 @@ const Checkout = () => {
                             );
 
                             alert("Order Created:", orderResponse.data);
-
+                            
                             dispatch(clearCart());
 
                             navigate(
