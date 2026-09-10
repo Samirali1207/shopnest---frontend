@@ -10,6 +10,7 @@ const Checkout = () => {
     const { user } = useContext(AuthContext);
     const cartItems = useSelector((state) => state.cart.cartItems);
 
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -57,6 +58,7 @@ const Checkout = () => {
                 description: "ShopNest Order",
                 order_id: orderData.id,
                 handler: async function (response) {
+                    setLoading(true)
                     try {
                         const verifyResponse = await axios.post(
                             `${import.meta.env.VITE_URL}/api/payment/verify`,
@@ -102,6 +104,8 @@ const Checkout = () => {
                             error.response?.data?.message ||
                             "Payment verification failed"
                         );
+
+                        setLoading(false)
                     }
                 },
                 prefill: {
@@ -267,9 +271,10 @@ const Checkout = () => {
 
                             <button
                                 type="submit"
+                                disabled={loading}
                                 className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md font-semibold transition"
                             >
-                                Pay Now
+                                {loading ? "Processing Payment..." : "Pay Now"}
                             </button>
 
                         </div>
